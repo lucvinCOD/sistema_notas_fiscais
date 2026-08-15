@@ -1,6 +1,19 @@
-@Estoque.Api_HostAddress = http://localhost:5266
+POST http://localhost:5266/produtos
+Content-Type: application/json
 
-GET {{Estoque.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+{
+    "nome": "Headset",
+    "quantidade": 20,
+    "preco": 180.00
+}
 
 ###
+
+PUT http://localhost:5266/produtos/2
+Content-Type: application/json
+
+{
+    "nome": "Mouse Gamer",
+    "quantidade": 40,
+    "preco": 199.90
+}
