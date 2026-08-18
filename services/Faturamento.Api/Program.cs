@@ -8,7 +8,17 @@ public partial class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-
+            builder.Services.AddCors(options =>
+                {
+                    options.AddPolicy("Frontend", policy =>{
+                        policy
+                        .WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                        }
+                    );
+                }
+            );
         // Add services to the container.
         builder.Services.AddOpenApi();
 
@@ -20,6 +30,7 @@ public partial class Program
         builder.Services.AddHttpClient();
 
         var app = builder.Build();
+        app.UseCors("Frontend");
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment()){

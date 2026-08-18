@@ -1,0 +1,140 @@
+<section class="pagina">
+  <div class="cabecalho">
+    <div>
+      <h2>Estoque</h2>
+      <p>Cadastre, edite e acompanhe os produtos disponíveis.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>
+      {{ editandoId !== null ? 'Editar produto' : 'Novo produto' }}
+    </h3>
+
+    <form (ngSubmit)="salvar()">
+      <div class="campo">
+        <label for="nome">Nome</label>
+        <input
+          id="nome"
+          name="nome"
+          type="text"
+          [(ngModel)]="nome"
+          required
+        />
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label for="quantidade">Quantidade</label>
+          <input
+            id="quantidade"
+            name="quantidade"
+            type="number"
+            min="0"
+            [(ngModel)]="quantidade"
+            required
+          />
+        </div>
+
+        <div class="campo">
+          <label for="preco">Preço</label>
+          <input
+            id="preco"
+            name="preco"
+            type="number"
+            min="0"
+            step="0.01"
+            [(ngModel)]="preco"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="acoes">
+        <button type="submit" class="primario">
+          {{ editandoId !== null ? 'Salvar alterações' : 'Cadastrar' }}
+        </button>
+
+        <button
+          *ngIf="editandoId !== null"
+          type="button"
+          class="secundario"
+          (click)="cancelarEdicao()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+
+    <p *ngIf="mensagem" class="mensagem sucesso">
+      {{ mensagem }}
+    </p>
+
+    <p *ngIf="erro" class="mensagem erro">
+      {{ erro }}
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="titulo-tabela">
+      <h3>Produtos cadastrados</h3>
+
+      <button
+        type="button"
+        class="secundario"
+        (click)="carregarProdutos()">
+        Atualizar
+      </button>
+    </div>
+
+    <p *ngIf="carregando">
+      Carregando produtos...
+    </p>
+
+    <p *ngIf="!carregando && produtos.length === 0">
+      Nenhum produto cadastrado.
+    </p>
+
+    <div
+      *ngIf="!carregando && produtos.length > 0"
+      class="tabela-container">
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let produto of produtos">
+            <td>{{ produto.id }}</td>
+            <td>{{ produto.nome }}</td>
+            <td>{{ produto.quantidade }}</td>
+            <td>
+              {{ produto.preco | currency:'BRL':'symbol':'1.2-2' }}
+            </td>
+            <td class="acoes-tabela">
+              <button
+                type="button"
+                class="editar"
+                (click)="editar(produto)">
+                Editar
+              </button>
+
+              <button
+                type="button"
+                class="excluir"
+                (click)="excluir(produto)">
+                Excluir
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

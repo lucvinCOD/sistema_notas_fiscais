@@ -1,0 +1,24 @@
+<header class="topbar">
+  <div>
+    <h1>{{ title }}</h1>
+    <p>Controle de estoque e emissão de notas fiscais</p>
+  </div>
+
+  <nav>
+    <a
+      routerLink="/produtos"
+      routerLinkActive="ativo">
+      Estoque
+    </a>
+
+    <a
+      routerLink="/notas"
+      routerLinkActive="ativo">
+      Faturamento
+    </a>
+  </nav>
+</header>
+
+<main class="conteudo">
+  <router-outlet></router-outlet>
+</main>

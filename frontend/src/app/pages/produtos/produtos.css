@@ -1,0 +1,128 @@
+.pagina {
+  display: grid;
+  gap: 24px;
+}
+
+.cabecalho h2,
+.card h3 {
+  margin-top: 0;
+}
+
+.cabecalho p {
+  margin-bottom: 0;
+  color: #6b7280;
+}
+
+.card {
+  padding: 24px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 8%);
+}
+
+form {
+  display: grid;
+  gap: 16px;
+}
+
+.linha {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.campo {
+  display: grid;
+  gap: 6px;
+}
+
+.campo label {
+  font-weight: 600;
+}
+
+.campo input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+.acoes,
+.acoes-tabela,
+.titulo-tabela {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.titulo-tabela {
+  justify-content: space-between;
+}
+
+button {
+  border: 0;
+  border-radius: 6px;
+  padding: 9px 14px;
+}
+
+.primario {
+  background: #2563eb;
+  color: white;
+}
+
+.secundario {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.editar {
+  background: #f59e0b;
+  color: white;
+}
+
+.excluir {
+  background: #dc2626;
+  color: white;
+}
+
+.mensagem {
+  margin-bottom: 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+}
+
+.sucesso {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.erro {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.tabela-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+  background: #f9fafb;
+}
+
+@media (max-width: 700px) {
+  .linha {
+    grid-template-columns: 1fr;
+  }
+}

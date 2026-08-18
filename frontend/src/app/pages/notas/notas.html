@@ -1,0 +1,189 @@
+<section class="pagina">
+  <div class="cabecalho">
+    <h2>Faturamento</h2>
+    <p>Monte os itens e emita uma nova nota fiscal.</p>
+  </div>
+
+  <div class="card">
+    <h3>Nova nota fiscal</h3>
+
+    <div class="linha">
+      <div class="campo produto">
+        <label for="produto">Produto</label>
+
+        <select
+          id="produto"
+          name="produto"
+          [(ngModel)]="produtoSelecionadoId">
+
+          <option [ngValue]="null">
+            Selecione...
+          </option>
+
+          <option
+            *ngFor="let produto of produtos"
+            [ngValue]="produto.id">
+
+            {{ produto.nome }}
+            — estoque: {{ produto.quantidade }}
+            — {{ produto.preco | currency:'BRL' }}
+          </option>
+        </select>
+      </div>
+
+      <div class="campo quantidade">
+        <label for="quantidadeNota">Quantidade</label>
+
+        <input
+          id="quantidadeNota"
+          name="quantidadeNota"
+          type="number"
+          min="1"
+          [(ngModel)]="quantidade"
+        />
+      </div>
+
+      <button
+        type="button"
+        class="primario adicionar"
+        (click)="adicionarItem()">
+        Adicionar
+      </button>
+    </div>
+
+    <p *ngIf="itens.length === 0" class="vazio">
+      Nenhum item adicionado.
+    </p>
+
+    <div
+      *ngIf="itens.length > 0"
+      class="tabela-container">
+
+      <table>
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+            <th>Subtotal</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of itens; let i = index">
+            <td>{{ item.nomeProduto }}</td>
+            <td>{{ item.quantidade }}</td>
+
+            <td>
+              {{ item.precoUnitario | currency:'BRL' }}
+            </td>
+
+            <td>
+              {{ item.subtotal | currency:'BRL' }}
+            </td>
+
+            <td>
+              <button
+                type="button"
+                class="excluir"
+                (click)="removerItem(i)">
+                Remover
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="total">
+        Total:
+        <strong>
+          {{ totalAtual | currency:'BRL' }}
+        </strong>
+      </div>
+
+      <button
+        type="button"
+        class="emitir"
+        (click)="emitirNota()">
+        Emitir nota fiscal
+      </button>
+    </div>
+
+    <p *ngIf="mensagem" class="mensagem sucesso">
+      {{ mensagem }}
+    </p>
+
+    <p *ngIf="erro" class="mensagem erro">
+      {{ erro }}
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="titulo-tabela">
+      <h3>Notas emitidas</h3>
+
+      <button
+        type="button"
+        class="secundario"
+        (click)="carregarNotas()">
+        Atualizar
+      </button>
+    </div>
+
+    <p *ngIf="carregando">
+      Carregando notas...
+    </p>
+
+    <p *ngIf="!carregando && notas.length === 0">
+      Nenhuma nota fiscal emitida.
+    </p>
+
+    <div
+      *ngIf="!carregando && notas.length > 0"
+      class="lista-notas">
+
+      <article
+        *ngFor="let nota of notas"
+        class="nota">
+
+        <div class="nota-cabecalho">
+          <div>
+            <strong>Nota #{{ nota.id }}</strong>
+
+            <span *ngIf="nota.dataEmissao">
+              {{ nota.dataEmissao | date:'dd/MM/yyyy HH:mm' }}
+            </span>
+          </div>
+
+          <span class="status">
+            {{ nota.status }}
+          </span>
+        </div>
+
+        <div class="itens-nota">
+          <div
+            *ngFor="let item of nota.itens"
+            class="item-nota">
+
+            <span>
+              {{ item.nomeProduto }}
+              × {{ item.quantidade }}
+            </span>
+
+            <span>
+              {{ item.subtotal | currency:'BRL' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="valor-nota">
+          Total:
+          <strong>
+            {{ nota.valorTotal | currency:'BRL' }}
+          </strong>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
